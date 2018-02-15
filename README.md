@@ -14,6 +14,8 @@ In researching Gatsby, I relied heavily on the [official documentation](https://
 
 This repo is the result of my creating a Gatsby site from scratch.
 
+---
+
 ## Initializing a Project
 
 The first thing we need to do is install the gatsby-cli node package
@@ -112,6 +114,53 @@ module.exports = {
 
 ```
 
+After installing these plugins, it is important to stop the development server with `^C` and start it again with `gatsby develop`.
+
+## Creating the First Blog Post
+
+Since we have configured our plugins to look in the `./src/pages` directory for our files, we can create a directory named `./src/pages/15-Feb-2018-first-post` and add an `index.md` file in it to test to see if our site is working correctly.
+
+in the `index.md`, we write some frontmatter at the top of the file with properties we want to reference later, and then the body of the markdown file.
+
+```
+---
+path: '/first-post'
+title: 'First Totally Rad Blog Post'
+---
+# This is a blog post
+```
+Now, we need to make a `./src/templates` file and create a `post.js` template file for this content type.
+
+```js
+import React from 'react'
+import Helmet from 'react-helmet'
+
+export default function Template ({ data }) {
+  const { markdownRemark: post } = data
+  return (
+    <div>
+      <h1>{post.frontmatter.title}</h1>
+    </div>
+  )
+}
+
+export const postQuery = graphql`
+  query BlogPostByPath($path: String!) {
+     markdownRemark(frontmatter: { path: { eq: $path } }) {
+      html
+      frontmatter {
+        path
+        title
+      }
+     }
+  }
+`
+```
+
+The query is graphql, which to be honest I don't understand fully. But this query is finding the markdown file that matches the path, and returning html and frontmatter properties.
+
+---
+
 ## Future Goals
 
 - [ ] Styled Components
@@ -119,6 +168,7 @@ module.exports = {
 - [ ] Deploy to Netlify
 - [ ] Infinite Scrolling for Blog Posts
 - [ ] Less important for this demo, but update site info in `gatsby-config.js` and `package.json`
+- [ ] determing what to call the properties of frontmatter
 
 ## Deploy
 
