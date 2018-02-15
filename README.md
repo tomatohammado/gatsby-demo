@@ -165,7 +165,7 @@ The query is graphql, which to be honest I am not familiar with and do not know 
 
 But from what I can tell, it looks like this query is finding the markdown file that matches the path, and returning its html and frontmatter properties.
 
-## Telling Gatsby to apply the Template to Posts
+## Applying the Template to Posts
 
 The last step is to modify the `./gatsby-node.js` file to use our template to create the blog post pages.
 
