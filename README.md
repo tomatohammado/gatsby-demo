@@ -68,12 +68,31 @@ To create a production build, use gatsby build
 
 I will only briefly talk about graphql in this demo, but the link `http://localhost:8000/___graphql` is very useful for testing out queries we might need to use in parts of our application.
 
+## File Structure
+
+the `./src` directory is where we will put the content of our site. There are a number of `./gatsby-<something>.js` configuration files, but I will not go into leverage those files.
+
+The `./src/layouts/` directory contains the particular `index.js` file that is rendered on all of the pages (by default, there might be a way to use other layouts but I did). This is not to be confused by the `index.js` in the `./src/pages/` directory, which corresponds to the index.js _page_ and not the layout.
+
+_PLACEHOLDER_ more about `/pages/` and the content-types
+
+## Impelmenting Markdown Support
+
+Gatsby uses plugins to add additional features. In order to use markdown files for specific content types and render them based on a template, we will need to add a few plugins.
+
+First, we will need the gatsby-source-filesystem package, because we will be using markdown files on our file system and not some external source.
+
+```bash
+npm install gatsby-source-filesystem
+```
+
 ## Future Goals
 
 - [ ] Styled Components
 - [ ] Adding support for Sass via the plugin
 - [ ] Deploy to Netlify
 - [ ] Infinite Scrolling for Blog Posts
+- [ ] Less important for this demo, but update site info in `gatsby-config.js` and `package.json`
 
 ## Deploy
 
