@@ -2,13 +2,13 @@
 
 ## Motivation
 
-I like the idea of using a static site generator for my personal site, because I like the idea of using a JAM stack (JavaScript, Angular, Markdown) to easily add content (ie **_blog posts_** and **_portfolio projects_**) with markdown.
+I am interested in implementing a static site generator for my personal site, because I like the idea of using a JAM stack (JavaScript, Angular, Markdown) to easily add content (ie _blog posts_ and _portfolio projects_) with markdown.
 
 There are many options, and the three that I am most interested in are [Gatsby](https://www.gatsbyjs.org/), [Hugo](https://gohugo.io/), and [Hexo](https://hexo.io/).
 
-I chose to dive into Gatsby first because it implements React (which I think makes it more of an (unfortunatly named) JRM stack) and it appears I will be able to make templates for both Blog Posts and Portfolio Projects, whereas with something like Hugo I was a little less sure how much customization I have outside of a conventional blog-like site.
+I chose to dive into Gatsby first because it implements React (which I think makes it more of an (unfortunatly named) JRM stack) and it appears I will be able to make templates for both Blog Posts and Portfolio Projects, whereas with something like Hugo I was a little less sure how much customization I have outside of a conventional blog-like site. If I only had time to try out one, it looks like I'll get the most mileage out of Gatsby.
 
-I also intend on implementing animations, and I felt that by virtue of using React I might be in a better position to implement the particular animations I have in mind.
+I also intend on adding certain animations, and I felt that by virtue of using React I might be in a better position to implement the particular animations I have in mind.
 
 In researching Gatsby, I relied heavily on the [official documentation](https://www.gatsbyjs.org/docs/), as well as a tutorial from [LevelUpTuts](https://www.leveluptutorials.com/). However, the LevelUpTuts videos reference an older version of Gatsby, so there are some minor adjustments that we have to figure out ourself and apply. Nothing crazy, but you do have to think about it.
 
@@ -72,7 +72,9 @@ I will only briefly talk about graphql in this demo, but the link `http://localh
 
 The `./src` directory is where we will put the content of our site. There are a number of `./gatsby-<something>.js` configuration files, which we will also modify in the process of building this application.
 
-The `./src/layouts/` directory contains the particular `index.js` file that is rendered on all of the pages (by default, there might be a way to use other layouts but I did). This is not to be confused by the `index.js` in the `./src/pages/` directory, which corresponds to the index.js _page_ and not the layout.
+The `./src/layouts/` directory contains the particular `index.js` file that is rendered on all of the pages (there might be a way to use other layouts but I did not research that. Yet.)
+
+This is not to be confused by the `index.js` in the `./src/pages/` directory, which corresponds to the index.js _page_ and not the layout.
 
 ## Impelmenting Markdown Support
 
@@ -80,8 +82,8 @@ Gatsby uses plugins to add additional features. In order to use markdown files f
 
 We will need:
 
-- _gatsby-source-filesystem package_: to use files on our file system and not some external source
-- _gatsby-transformer-remark_: so we can work with markdown files
+- **gatsby-source-filesystem package**: to use files on our file system and not some external source
+- **gatsby-transformer-remark**: so we can work with markdown files
 
 ```bash
 npm install gatsby-source-filesystem gatsby-transformer-remark
@@ -116,7 +118,9 @@ After installing these plugins, it is important to stop the development server w
 
 Since we have configured our plugins to look in the `./src/pages` directory for our files, we can create a directory named `./src/pages/15-Feb-2018-first-post` and add an `index.md` file in it to test to see if our site is working correctly.
 
-in the `index.md`, we write some frontmatter at the top of the file with properties we want to reference later, and then the body of the markdown file.
+In the `index.md`, we write some frontmatter at the top of the file. Frontmatter is a convention from the Jekyll static site generator, and it contains properties we want to reference later.
+
+We can then write normal markdown for the body of the content, in this case a blog post.
 
 ```md
 ---
@@ -125,6 +129,8 @@ title: 'First Totally Rad Blog Post'
 ---
 # This is a blog post
 ```
+
+## Creating the Post Template
 
 Now, we need to make a `./src/templates` file and create a `post.js` template file for this content type.
 
@@ -154,9 +160,11 @@ export const postQuery = graphql`
 `
 ```
 
-The query is graphql, which to be honest I am not familiar with and do not know why the syntax is what it is (backticks? no commas?!). However, it looks lik this query is finding the markdown file that matches the path, and returning its html and frontmatter properties.
+The query is graphql, which to be honest I am not familiar with and do not know what's going on with the syntax (backticks? no commas in an object-literal-looking-thing?!).
 
-We are almost there!
+But from what I can tell, it looks like this query is finding the markdown file that matches the path, and returning its html and frontmatter properties.
+
+## Telling Gatsby to apply the Template to Posts
 
 The last step is to modify the `./gatsby-node.js` file to use our template to create the blog post pages.
 
