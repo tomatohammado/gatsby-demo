@@ -10,9 +10,7 @@ I chose to dive into Gatsby first because it implements React (which I think mak
 
 I also intend on implementing animations, and I felt that by virtue of using React I might be in a better position to implement the particular animations I have in mind.
 
-In researching Gatsby, I relied heavily on the [official documentation](https://www.gatsbyjs.org/docs/), as well as a tutorial from [LevelUpTuts](https://www.leveluptutorials.com/).
-
-This repo is the result of my creating a Gatsby site from scratch.
+In researching Gatsby, I relied heavily on the [official documentation](https://www.gatsbyjs.org/docs/), as well as a tutorial from [LevelUpTuts](https://www.leveluptutorials.com/). However, the LevelUpTuts videos reference an older version of Gatsby, so there are some minor adjustments that we have to figure out ourself and apply. Nothing crazy, but you do have to think about it.
 
 ---
 
@@ -114,7 +112,7 @@ module.exports = {
 
 ```
 
-After installing these plugins, it is important to stop the development server with `^C` and start it again with `gatsby develop`.
+After installing these plugins, it is important to stop the development server with `^C` and restart it with `gatsby develop`.
 
 ## Creating the First Blog Post
 
@@ -122,13 +120,14 @@ Since we have configured our plugins to look in the `./src/pages` directory for 
 
 in the `index.md`, we write some frontmatter at the top of the file with properties we want to reference later, and then the body of the markdown file.
 
-```
+```md
 ---
 path: '/first-post'
 title: 'First Totally Rad Blog Post'
 ---
 # This is a blog post
 ```
+
 Now, we need to make a `./src/templates` file and create a `post.js` template file for this content type.
 
 ```js
@@ -159,14 +158,63 @@ export const postQuery = graphql`
 
 The query is graphql, which to be honest I don't understand fully. But this query is finding the markdown file that matches the path, and returning html and frontmatter properties.
 
+We are almost there!
+
+The last step is to modify the `./gatsby-node.js` file to use our template to create the blog post pages.
+
+```js
+const path = require('path')
+
+exports.createPages = ({ boundActionCreators, graphql }) => {
+  const { createPage } = boundActionCreators
+
+  const postTemplate = path.resolve('src/templates/post.js')
+
+  return graphql(`{
+    allMarkdownRemark {
+      edges {
+        node {
+          html
+          id
+          frontmatter {
+            path
+            title
+          }
+        }
+      }
+    }
+  }`)
+  .then(res => {
+    if (res.errors) {
+      return Promise.reject(res.errors)
+    }
+
+    res.data.allMarkdownRemark.edges.forEach(({ node }) => {
+      createPage({
+        path: node.frontmatter.path,
+        component: postTemplate
+      })
+    })
+  })
+}
+```
+
+It might be helpful to restart the `gatsby develop` server to check to see if there are any errors.
+
+If not, you should get something like this
+
+![rendered blog post](./screenshots/Screen-Shot-2018-02-15-at-3.27.05-PM.png)
+
+Great job!!!
+
 ---
 
 ## Future Goals
 
-- [ ] Styled Components
-- [ ] Adding support for Sass via the plugin
-- [ ] Deploy to Netlify
-- [ ] Infinite Scrolling for Blog Posts
+- [ ] [Styled Components](https://github.com/styled-components/styled-components)
+- [ ] Adding support for Sass via [the plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/)
+- [ ] Deploy to Netlify (see link at bottom)
+- [ ] Infinite Scrolling for Blog Posts ([see here](https://github.com/metafizzy/infinite-scroll))
 - [ ] Less important for this demo, but update site info in `gatsby-config.js` and `package.json`
 - [ ] determing what to call the properties of frontmatter
 
