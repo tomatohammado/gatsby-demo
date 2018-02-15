@@ -156,7 +156,7 @@ export const postQuery = graphql`
 `
 ```
 
-The query is graphql, which to be honest I don't understand fully. But this query is finding the markdown file that matches the path, and returning html and frontmatter properties.
+The query is graphql, which to be honest I am not familiar with and do not know why the syntax is what it is (backticks? no commas?!). However, it looks lik this query is finding the markdown file that matches the path, and returning its html and frontmatter properties.
 
 We are almost there!
 
@@ -206,6 +206,8 @@ If not, you should get something like this
 ![rendered blog post](./screenshots/Screen-Shot-2018-02-15-at-3.27.05-PM.png)
 
 Great job!!!
+
+I encourage you to now try to make a new blog post that uses the same template.
 
 ---
 
