@@ -1,4 +1,5 @@
 import React from 'react'
+// I may or may not actually need to import react-helmet here...
 import Helmet from 'react-helmet'
 
 export default function Template ({ data }) {

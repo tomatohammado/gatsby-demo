@@ -136,6 +136,7 @@ Now, we need to make a `./src/templates` file and create a `post.js` template fi
 
 ```js
 import React from 'react'
+// I may or may not actually need to import react-helmet here...
 import Helmet from 'react-helmet'
 
 export default function Template ({ data }) {
