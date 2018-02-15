@@ -70,7 +70,7 @@ I will only briefly talk about graphql in this demo, but the link `http://localh
 
 ## File Structure
 
-the `./src` directory is where we will put the content of our site. There are a number of `./gatsby-<something>.js` configuration files, but I will not go into leverage those files.
+The `./src` directory is where we will put the content of our site. There are a number of `./gatsby-<something>.js` configuration files, which we will also modify in the process of building this application.
 
 The `./src/layouts/` directory contains the particular `index.js` file that is rendered on all of the pages (by default, there might be a way to use other layouts but I did). This is not to be confused by the `index.js` in the `./src/pages/` directory, which corresponds to the index.js _page_ and not the layout.
 
@@ -80,10 +80,36 @@ _PLACEHOLDER_ more about `/pages/` and the content-types
 
 Gatsby uses plugins to add additional features. In order to use markdown files for specific content types and render them based on a template, we will need to add a few plugins.
 
-First, we will need the gatsby-source-filesystem package, because we will be using markdown files on our file system and not some external source.
+We will need:
+
+- _gatsby-source-filesystem package_: to use files on our file system and not some external source
+- _gatsby-transformer-remark_: so we can work with markdown files
 
 ```bash
-npm install gatsby-source-filesystem
+npm install gatsby-source-filesystem gatsby-transformer-remark
+```
+
+Next, we need to include these plugins in `./gatsby-config.js`
+
+```diff bash
+module.exports = {
+  siteMetadata: {
+    title: 'Gatsby Default Starter'
+  },
+-  plugins: ['gatsby-plugin-react-helmet']
++ plugins: [
++    'gatsby-plugin-react-helmet',
++    {
++      resolve: 'gatsby-source-filesystem',
++      options: {
++        path: `${__dirname}/src/pages`,
++        name: 'pages'
++      }
++    },
++    'gatsby-transformer-remark'
++  ]
+}
+
 ```
 
 ## Future Goals
