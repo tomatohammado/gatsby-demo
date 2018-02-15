@@ -91,7 +91,7 @@ npm install gatsby-source-filesystem gatsby-transformer-remark
 
 Next, we need to include these plugins in `./gatsby-config.js`
 
-```js diff
+```diffjs
 module.exports = {
   siteMetadata: {
     title: 'Gatsby Default Starter'
