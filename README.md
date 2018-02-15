@@ -74,8 +74,6 @@ The `./src` directory is where we will put the content of our site. There are a 
 
 The `./src/layouts/` directory contains the particular `index.js` file that is rendered on all of the pages (by default, there might be a way to use other layouts but I did). This is not to be confused by the `index.js` in the `./src/pages/` directory, which corresponds to the index.js _page_ and not the layout.
 
-_PLACEHOLDER_ more about `/pages/` and the content-types
-
 ## Impelmenting Markdown Support
 
 Gatsby uses plugins to add additional features. In order to use markdown files for specific content types and render them based on a template, we will need to add a few plugins.
